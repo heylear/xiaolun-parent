@@ -1,0 +1,393 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <title>我的主页</title>
+    <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>-->
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/wordpress.css">
+    <link rel="stylesheet" href="css/glor.css">
+</head>
+<body ontouchstart>
+<div class="ui-loading-block hide" id="ajax_loading">
+    <div class="ui-loading-cnt">
+        <i class="ui-loading-bright"></i>
+
+        <p>正在加载中...</p>
+    </div>
+</div>
+<section id="center_container"></section>
+<script type="text/html" id="center_view">
+    {{if piclist.length > 0 }}
+    <!--<div class="widget-box">-->
+    <div class="ui-placehold-img" style="padding-top: 60%;position: relative;z-index: 998">
+        <span style="background-image:url(downloadPic.action?attachId={{piclist[0].entityId}});background-size:100% 100%"></span>
+    </div>
+    <div class="ui-avatar-lg"
+         style="margin-left: 40%;margin-bottom: 10px;margin-top:-33px; position: relative;z-index: 999">
+        <span style="background-image:url({{headimgurl}})"></span>
+    </div>
+    <ul class="ui-tiled">
+        {{if actioncnt.length > 0}}
+        <li>
+            <div>累积获赞数:{{actioncnt[0].total_cnt}}<img src="img/u33.png" style="margin-left:10px;height: 18px"/>
+            </div>
+        </li>
+        <li>
+            <div>今日获赞数:{{actioncnt[0].today_cnt}}<img src="img/u33.png" style="margin-left:10px;height: 18px"/>
+            </div>
+        </li>
+        {{/if}}
+    </ul>
+    <ul class="ui-grid-halve">
+        {{each piclist as pic}}
+        <li>
+            <div class="ui-grid-halve-img" data-target="{{pic.entityId}}">
+                <span style="background-image:url(downloadPic.action?attachId={{pic.entityId}})"></span>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+    <div style="text-align: right;">
+        <button class="ui-btn ui-btn-glor" id="edit_pic" style="margin-right:10px">
+            编辑相册
+        </button>
+    </div>
+    <!--</div>-->
+    <!--<div class="widget-box">-->
+    <section class="widget-content"> <!-- You can start editing here. -->
+        <div id="comments"><h3 class="comment-title">{{questlist.length}} 条新提问<a href="javascript:void(0)"
+                                                                                 id="replied_list_view">查看已回答</a></h3>
+        </div>
+        <ol class="commentlist">
+            {{each questlist as quest index}}
+            <li class="comment odd alt thread-odd thread-alt depth-1" id="comment-{{quest.entity_id}}">
+                <div id="div-comment-{{quest.entity_id + 1000}}" class="comment-body">
+                    <div class="comment-author vcard"><img
+                            data-original="{{quest.headimgurl}}"
+                            src="{{quest.headimgurl}}"
+                            class="avatar avatar-108" height="108" width="108" style="display: block;">
+
+                        <div class="floor"> {{questlist.length - index}}#</div>
+                        <a href="newcenter2.html?destUserId={{quest.post_user_id}}" rel="external nofollow"
+                           class="url">{{quest.nickname}}</a>:
+                    </div>
+                    <p>{{quest.quest_text}}</p>
+
+                    <div class="clear"></div>
+                    <span class="datetime">{{quest.create_time}}</span><span class="reply"><a
+                        rel="nofollow"
+                        class="comment-reply-login alignright" style="margin-left: 15px;"
+                        href="javascript:void(0)" data-target="#quest_reply_{{quest.entity_id}}">回复</a></span>
+
+                    <div class="hidden" id="quest_reply_{{quest.entity_id}}">
+                        <div class="ui-form-item ui-form-item-l ui-border-b" style="height:120px">
+                            <input type="hidden" value="{{quest.entity_id}}" class="baseQuestId"/>
+                            <input type="hidden" value="{{userid}}" class="destUserId"/>
+                            <textarea class="quest_description" placeholder="耐心回复人家吧~"
+                                      style="margin-top: 15px;margin-left: -45px;" rows="5"></textarea>
+                        </div>
+                        <div class="ui-btn-wrap align-center">
+                            <button class="ui-btn ui-btn-glor submit_quest_btn">
+                                提交
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+        </ol>
+        <div class="page-nav comment-nav"></div>
+    </section>
+    <!--</div>-->
+    <!--<div class="widget-box">-->
+    <section class="widget-content">
+        <div id="comments"><h3 class="comment-title">{{actionlist.length}} 条动态</h3></div>
+        <ol class="commentlist comment-state">
+            {{each actionlist as action index }}
+            <li class="odd alt thread-odd thread-alt" id="latest-state-{{index}}">
+                <div id="latest-state-{{index + 1000}}" class="comment-body">
+                    <div class="comment-author vcard"><img
+                            data-original="{{action.headimgurl}}"
+                            src="{{action.headimgurl}}"
+                            class="avatar avatar-108" height="108" width="108" style="display: block;">
+                    </div>
+                    <p><a href="newcenter2.html?destUserId={{action.act_user_id}}">{{action.nickname}}</a>&nbsp;{{action.act_name}}
+                    </p>
+                </div>
+            </li>
+            {{/each}}
+            <div class="page-nav pagination" style="padding-bottom: 20px;padding-left: 34%">上拉加载更多...</div>
+        </ol>
+    </section>
+    <!--</div>-->
+    {{else}}
+    <!--<div class="widget-box">-->
+    <div class="demo-item" style="margin-top: 45%">
+        <h1 class="ui-txt-muted align-center">您还没有车辆哦</h1>
+
+        <div class="ui-notice-btn">
+            <ul class="">
+                <li>
+                    <button class="ui-btn-glor ui-btn-lg" id="add_new_car">
+                        添加新车
+                    </button>
+                </li>
+                <li>
+                    <button class="ui-btn-glor ui-btn-lg"
+                            id="buy_car_seller">找顾问买车
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--</div>-->
+    {{/if}}
+</script>
+<script type="text/html" id="quest_list">
+    <div id="comments"><h3 class="comment-title">{{allquestlist.length}} 条已回答</h3>
+    </div>
+    <ol class="commentlist">
+        {{each allquestlist as quest index}}
+        <li class="comment odd alt thread-odd thread-alt depth-1" id="comment-{{quest.entity_id}}-1">
+            <div id="div-comment-{{quest.entity_id + 1000}}-1" class="comment-body">
+                <div class="comment-author vcard"><img
+                        data-original="{{quest.headimgurl}}"
+                        src="{{quest.headimgurl}}"
+                        class="avatar avatar-108" height="108" width="108" style="display: block;">
+
+                    <div class="floor"> {{allquestlist.length - index}}#</div>
+                    <a href="newcenter2.html?destUserId={{quest.post_user_id}}" rel="external nofollow"
+                       class="url">{{quest.nickname}}</a>:
+                </div>
+                <p>{{quest.quest_text}}</p>
+
+                <div class="clear"></div>
+                <span class="datetime">{{quest.create_time}}</span>
+
+            </div>
+            <ul class="children">
+                <li class="comment byuser comment-author-clmao bypostauthor odd alt depth-2"
+                    id="comment-{{quest.reply.entity_id}}-1-1">
+                    <div id="div-comment-{{quest.reply.entity_id + 1000}}-1-1" class="comment-body">
+                        <div class="comment-author vcard"><img
+                                data-original="{{quest.reply.headimgurl}}"
+                                src="{{quest.reply.headimgurl}}"
+                                class="avatar avatar-108" height="108" width="108" style="display: block;">
+
+                            <div class="floor"></div>
+                            <a href="newcenter2.html?destUserId={{quest.reply.post_user_id}}" rel="external nofollow"
+                               class="url">{{quest.reply.nickname}}</a>:
+                        </div>
+                        <p>{{quest.reply.quest_text}}</p>
+
+                        <div class="clear"></div>
+                        <span class="datetime">{{quest.reply.create_time}}</span>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        {{/each}}
+    </ol>
+    <div class="page-nav comment-nav"></div>
+</script>
+<script type="text/html" id="pic_edit">
+    <div class="widget-box">
+        <div class="demo-item">
+            <div class="demo-block">
+                <ul class="ui-grid-halve" id="edit_pic_list">
+                    {{ if piclist }}
+                    {{ each piclist as pic }}
+                    <li>
+                        <div class="ui-grid-halve-img" data-target="{{pic.entityId}}">
+                            <span style="background-image:url(downloadPic.action?attachId={{pic.entityId}})"></span>
+                        </div>
+                    </li>
+                    {{/each}}
+                    {{/if}}
+                </ul>
+            </div>
+            <div class="ui-notice-btn" style="margin-top: -20px">
+                <ul class="">
+                    <li>
+                        <button class="ui-btn-glor ui-btn-lg" id="add_car_pic">添加</button>
+                    </li>
+                    <li>
+                        <button class="ui-btn-glor ui-btn-lg" id="del_car_pic">返回</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="lib/zepto.min.js"></script>
+<script src="js/frozen.js"></script>
+<script src="js/template.js"></script>
+<script src="js/zepto-ext.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var Ready = {
+            reply: function ($container) {
+                $container.find(".submit_quest_btn").on('singleTap', function () {
+                    var text = $container.find(".quest_description").val();
+                    if (!text) {
+                        $.tips({
+                            content: '回答内容不能为空哦~',
+                            stayTime: 3000,
+                            type: "info"
+                        });
+                        return false;
+                    }
+                    var destUserId = $container.find(".destUserId").val();
+                    var baseQuestId = $container.find(".baseQuestId").val();
+                    $.getJSONExt('askOrReply.action?baseQuestId=' + baseQuestId + '&destUserId=' + destUserId + '&questionText=' + text, function () {
+                        location.href = location.href + '&_' + Date.now();
+                    })
+                    $container.remove();
+                });
+            },
+            centerView: function (Data) {
+                $("#buy_car_seller").unbind().on('singleTap', function () {
+                    location.href = 'find.html?_' + Date.now();
+                });
+                $("#add_new_car").unbind().on('singleTap', function () {
+                    $("#center_container").applyTemplate("pic_edit");
+                    Ready.editView();
+                });
+                $("#edit_pic").unbind().on('singleTap', function () {
+                    $("#center_container").applyTemplate("pic_edit", Data);
+                    Ready.editView();
+                });
+                $(".comment-reply-login").each(function () {
+                    $(this).on('singleTap', function () {
+                        $($(this).data('target')).removeClass("hidden").addClass("show");
+                        Ready.reply($($(this).data('target')));
+                    });
+                });
+                $("#replied_list_view").on('singleTap', function () {
+                    $.getJSONExt('allQuestion.action', function (Data) {
+                        $("#center_container").applyTemplate("quest_list", Data);
+                    });
+                });
+                /*var urllist = [];
+                 $.each(Data.piclist, function () {
+                 urllist.push('http://'+location.host+'/wxglor/wx/downloadPic.action?attachId=' + this.entityId);
+                 });*/
+                $(".ui-grid-halve-img").each(function () {
+                    $(this).on('singleTap', function () {
+                        var $this = $(this);
+                        $.applyWx(function (wx) {
+                            wx.previewImage({
+                                current: 'http://' + location.host + '/wxglor/wx/downloadPic.action?attachId=' + $this.data('target') + '&_' + Date.now(), // 当前显示图片的http链接
+                                urls: ['http://' + location.host + '/wxglor/wx/downloadPic.action?attachId=' + $this.data('target') + '&_' + Date.now()] // 需要预览的图片http链接列表
+                            });
+                        });
+                    });
+                });
+
+            },
+            editView: function () {
+                var diahtm = $("#ui_dialog").html();
+                $.tips({
+                    content: '点击添加按钮开始上传图片吧~',
+                    stayTime: 3000,
+                    type: "info"
+                });
+                $(".ui-grid-halve-img").each(function () {
+                    $(this).on('singleTap', function () {
+                        var $this = $(this);
+                        var dia = $.dialog({
+                            title: "删除OR预览?",
+                            button: ["删除", "预览"]
+                        });
+
+                        dia.on("dialog:action", function (e) {
+                            if (e.index == 0) {
+                                $.getJSONExt('deletePic.action?attachId=' + $this.data('target'), function () {
+                                    $this.parent().remove();
+                                });
+                            } else {
+                                $.applyWx(function (wx) {
+                                    wx.previewImage({
+                                        current: 'http://' + location.host + '/wxglor/wx/downloadPic.action?attachId=' + $this.data('target') + '&_' + Date.now(), // 当前显示图片的http链接
+                                        urls: ['http://' + location.host + '/wxglor/wx/downloadPic.action?attachId=' + $this.data('target') + '&_' + Date.now()] // 需要预览的图片http链接列表
+                                    });
+                                })
+                            }
+                        });
+                    });
+                });
+                $("#add_car_pic").unbind().on('singleTap', function () {
+                    $.applyWx(function (wx) {
+                        wx.chooseImage({
+                            count: 1, // 默认9
+                            sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                            success: function (res) {
+                                var localId = res.localIds[0]; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                                wx.uploadImage({
+                                    localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+                                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                                    success: function (res) {
+                                        try {
+                                            var serverId = res.serverId; // 返回图片的服务器端ID
+                                            $.getJSONExt('uploadPic.action?localId=' + localId + '&serverId=' + serverId, function (Data) {
+                                                var $li = $('<li><div class="ui-grid-halve-img">' +
+                                                        '<span style="background-image:url(' + localId + ')"></span> </div></li>')
+                                                $("#edit_pic_list").append($li);
+                                                $li.on('doubleTap', function () {
+                                                    if ($(this).attr('class').match('ui-tag-selected')) {
+                                                        $(this).removeClass("ui-tag-selected")
+                                                    } else {
+                                                        $(this).addClass("ui-tag-selected")
+                                                    }
+                                                });
+                                                $li.on('singleTap', function () {
+                                                    var $this = $(this);
+                                                    var dia = $.dialog({
+                                                        title: "删除OR预览?",
+                                                        button: ["删除", "预览"]
+                                                    });
+
+                                                    dia.on("dialog:action", function (e) {
+                                                        if (e.index == 0) {
+                                                            $.getJSONExt('deletePic.action?attachId=' + Data, function () {
+                                                                $this.remove();
+                                                            });
+                                                        } else {
+                                                            $.applyWx(function (wx) {
+                                                                wx.previewImage({
+                                                                    current: 'http://' + location.host + '/wxglor/wx/downloadPic.action?attachId=' + Data + '&_' + Date.now(), // 当前显示图片的http链接
+                                                                    urls: ['http://' + location.host + '/wxglor/wx/downloadPic.action?attachId=' + Data + '&_' + Date.now()] // 需要预览的图片http链接列表
+                                                                });
+                                                            })
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        } catch (e) {
+                                            alert(e);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    });
+                });
+                $("#del_car_pic").unbind().on('singleTap', function () {
+                    location.href = 'newcenter.html?_' + Date.now();
+                });
+            }
+        };
+
+        $.getJSONExt('mycenterall.action', function (Data) {
+            $("#center_container").applyTemplate("center_view", Data);
+            Ready.centerView(Data);
+        });
+    });
+</script>
+</body>
+</html>

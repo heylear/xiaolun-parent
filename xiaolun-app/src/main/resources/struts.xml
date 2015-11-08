@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+        "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+    <package name="wx" extends="struts-default,convention-default" namespace="/wx">
+        <result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+            <result-type name="plainText" class="org.apache.struts2.dispatcher.PlainTextResult" />
+        </result-types>
+        <interceptors>
+            <interceptor name="exceptionJson"
+                         class="cn.glor.xiaolun.app.controller.interceptor.ExceptionMappingJsonResultInterceptor"/>
+            <interceptor name="wxInside" class="cn.glor.xiaolun.app.controller.interceptor.WxInsideInterceptor"/>
+            <interceptor name="sellerLogin_" class="cn.glor.xiaolun.app.controller.interceptor.SellerLoginInterceptor"/>
+            <interceptor name="fieldErrorJson"
+                         class="cn.glor.xiaolun.app.controller.interceptor.FieldErrorJSONInterceptor"/>
+            <interceptor name="personalCenterInterceptor"
+                         class="cn.glor.xiaolun.app.controller.interceptor.PersonalCenterInterceptor"/>
+            <interceptor-stack name="wx">
+                <interceptor-ref name="fieldErrorJson"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="exceptionJson"/>
+                <interceptor-ref name="wxInside"/>
+            </interceptor-stack>
+            <interceptor-stack name="customerLogin">
+                <interceptor-ref name="wx"/>
+            </interceptor-stack>
+            <interceptor-stack name="sellerLogin">
+                <interceptor-ref name="wx"/>
+                <interceptor-ref name="sellerLogin_"/>
+            </interceptor-stack>
+            <interceptor-stack name="personalCenter">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="personalCenterInterceptor"/>
+            </interceptor-stack>
+        </interceptors>
+        <global-results>
+            <result name="success" type="json"/>
+            <result type="json" name="exception">
+                <param name="root">exception</param>
+            </result>
+        </global-results>
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="exception"/>
+        </global-exception-mappings>
+    </package>
+</struts>

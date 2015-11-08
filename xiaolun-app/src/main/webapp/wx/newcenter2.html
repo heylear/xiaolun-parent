@@ -1,0 +1,190 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <title>他的主页</title>
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/wordpress.css">
+    <link rel="stylesheet" href="css/glor.css">
+</head>
+<body ontouchstart>
+<div class="ui-loading-block hide" id="ajax_loading">
+    <div class="ui-loading-cnt">
+        <i class="ui-loading-bright"></i>
+
+        <p>正在加载中...</p>
+    </div>
+</div>
+<section id="center_container"></section>
+<script type="text/html" id="center_view">
+    {{if piclist.length > 0 }}
+    <!--<div class="widget-box">-->
+    <div class="ui-placehold-img" style="padding-top: 60%;position: relative;z-index: 998">
+        <span style="background-image:url(downloadPic.action?attachId={{piclist[0].entityId}});background-size:100% 100%"></span>
+    </div>
+    <div class="ui-avatar-lg"
+         style="margin-left: 40%;margin-bottom: 10px;margin-top:-33px; position: relative;z-index: 999">
+        <span style="background-image:url({{destUser.headImgUrl}})"></span>
+    </div>
+    <ul class="ui-tiled">
+        <li>
+            <div>累积获赞数:{{actioncnt[0].total_cnt}}<img src="img/u33.png" style="margin-left:10px;height: 18px"/>
+            </div>
+        </li>
+        <li>
+            <div>今日获赞数:{{actioncnt[0].today_cnt}}<img src="img/u33.png" style="margin-left:10px;height: 18px"/>
+            </div>
+        </li>
+    </ul>
+    <ul class="ui-grid-halve">
+        {{each piclist as pic}}
+        <li>
+            <div class="ui-grid-halve-img" data-target="downloadPic.action?attachId={{pic.entityId}}">
+                <span style="background-image:url(downloadPic.action?attachId={{pic.entityId}})"></span>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+    <ul class="ui-tiled ui-tiled-opt" style="padding-bottom: 10px;padding-top: 10px;">
+        <li data-target="1" data-destuser="{{destUser.entityId}}">
+            <div><a>我想坐坐</a>
+
+                <p class="ui-txt-warning" style="display: inline">(<span>{{actioncntdetail[0].sit_cnt}}</span>)</p>
+            </div>
+        </li>
+        <li data-target="2" data-destuser="{{destUser.entityId}}">
+            <div><a>我想试试</a>
+
+                <p class="ui-txt-warning" style="display: inline">(<span>{{actioncntdetail[0].try_cnt}}</span>)</p>
+            </div>
+        </li>
+        <li data-target="3" data-destuser="{{destUser.entityId}}">
+            <div><a>我想买</a>
+
+                <p class="ui-txt-warning" style="display: inline">(<span>{{actioncntdetail[0].buy_cnt}}</span>)</p>
+            </div>
+        </li>
+    </ul>
+    <!--</div>-->
+
+    <!--<div class="widget-box">-->
+    <div class="widget-content">
+        <div id="comments"><h3 class="comment-title">{{allquestlist.length}} 条提问</h3>
+        </div>
+        <ol class="commentlist">
+            {{each allquestlist as quest index}}
+            <li class="comment odd alt thread-odd thread-alt depth-1" id="comment-{{quest.entity_id}}-1">
+                <div id="div-comment-{{quest.entity_id + 1000}}-1" class="comment-body">
+                    <div class="comment-author vcard"><img
+                            data-original="{{quest.headimgurl}}"
+                            src="{{quest.headimgurl}}"
+                            class="avatar avatar-108" height="108" width="108" style="display: block;">
+
+                        <div class="floor"> {{allquestlist.length - index}}#</div>
+                        <a href="newcenter2.html?destUserId={{quest.post_user_id}}" rel="external nofollow"
+                           class="url">{{quest.nickname}}</a>:
+                    </div>
+                    <p>{{quest.quest_text}}</p>
+
+                    <div class="clear"></div>
+                    <span class="datetime">{{quest.create_time}}</span>
+
+                </div>
+                {{if quest.reply }}
+                <ul class="children">
+                    <li class="comment byuser comment-author-clmao bypostauthor odd alt depth-2"
+                        id="comment-{{quest.reply.entity_id}}-1-1">
+                        <div id="div-comment-{{quest.reply.entity_id + 1000}}-1-1" class="comment-body">
+                            <div class="comment-author vcard"><img
+                                    data-original="{{quest.reply.headimgurl}}"
+                                    src="{{quest.reply.headimgurl}}"
+                                    class="avatar avatar-108" height="108" width="108" style="display: block;">
+
+                                <div class="floor"></div>
+                                <a href="newcenter2.html?destUserId={{quest.reply.post_user_id}}" rel="external nofollow"
+                                   class="url">{{quest.reply.nickname}}</a>:
+                            </div>
+                            <p>{{quest.reply.quest_text}}</p>
+
+                            <div class="clear"></div>
+                            <span class="datetime">{{quest.reply.create_time}}</span>
+                        </div>
+                    </li>
+                </ul>
+                {{/if}}
+            </li>
+            {{/each}}
+        </ol>
+    </div>
+    <div class="ui-form-item ui-form-item-l ui-border-b" style="height:120px">
+        <input type="hidden" value="{{destUser.entityId}}" id="dest_user_id"/>
+        <textarea id="quest_description" placeholder="有什么问题可以详细描述哦" style="margin-top: 15px;margin-left: -45px;" rows="5"></textarea>
+    </div>
+    <div class="ui-btn-wrap align-center">
+        <button class="ui-btn ui-btn-glor" id="submit_quest_btn">
+            我要提问
+        </button>
+    </div>
+    <!--</div>-->
+    {{else}}
+    <!--<div class="widget-box">-->
+    <div class="demo-item" style="margin-top: 45%">
+        <h1 class="ui-txt-muted align-center">他还没有车辆哦</h1>
+    </div>
+    <!--</div>-->
+    {{/if}}
+</script>
+<script src="lib/zepto.min.js"></script>
+<script src="js/frozen.js"></script>
+<script src="js/template.js"></script>
+<script src="js/zepto-ext.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $.getJSONExt('centerall.action?destUserId=' + location.search.match('destUserId=(\\d+)')[1], function (Data) {
+            $("#center_container").applyTemplate("center_view", Data);
+            $(".ui-tiled-opt li").each(function () {
+                var $this = $(this);
+                $this.on('singleTap', function () {
+                    $.getJSONExt('interaction.action?destUserId=' + $this.data('destuser') + '&actType=' + $(this).data('target'), function () {
+                        var cnt = parseInt($this.find('span').html()) + 1;
+                        $this.find('span').html(cnt);
+                    })
+                });
+            });
+            var urllist = [];
+            $.each(Data.piclist, function () {
+                urllist.push('http://' + location.host + '/wxglor/wx/downloadPic.action?attachId=' + this.entityId);
+            })
+            $(".ui-grid-halve-img").on('singleTap', function () {
+                var $this = $(this);
+                $.applyWx(function (wx) {
+                    wx.previewImage({
+                        current: 'http://' + location.host + '/wxglor/wx/' + $this.data('target'), // 当前显示图片的http链接
+                        urls: urllist // 需要预览的图片http链接列表
+                    });
+                })
+            });
+
+            $("#submit_quest_btn").on('singleTap', function () {
+                var text = $("#quest_description").val();
+                if (!text) {
+                    $.tips({
+                        content: '问题不能为空哦~',
+                        stayTime: 3000,
+                        type: "info"
+                    });
+                    return false;
+                }
+                var destUserId = $("#dest_user_id").val();
+                $.getJSONExt('askOrReply.action?destUserId=' + destUserId + '&questionText=' + text, function () {
+                    location.href = location.href + '&_' + Date.now();
+                })
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN"
+        "http://jetty.mortbay.org/configure.dtd">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <New id="dataSource" class="org.eclipse.jetty.plus.jndi.Resource">
+        <Arg>jndi/cn/glor/xlap</Arg>
+        <Arg>
+            <New class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+                <Set name="driverClassName">com.mysql.jdbc.Driver</Set>
+                <Set name="url">jdbc:mysql://127.0.0.1:3306/xlap?useUnicode=true&amp;characterEncoding=utf-8</Set>
+                <Set name="username">root</Set>
+                <Set name="password">password</Set>
+            </New>
+        </Arg>
+        <Call name="bindToENC">
+            <Arg>jndi/cn/glor/xlap</Arg>
+        </Call>
+    </New>
+</Configure>

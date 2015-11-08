@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <title>我的主页</title>
+    <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>-->
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/glor.css">
+    <script src="lib/zepto.min.js"></script>
+    <script src="js/frozen.js"></script>
+</head>
+
+<body ontouchstart>
+<section class="ui-container">
+    <div class="ui-loading-block hide">
+        <div class="ui-loading-cnt">
+            <i class="ui-loading-bright"></i>
+            <p>正在加载中...</p>
+        </div>
+    </div>
+    <section id="my-center">
+        <div class="demo-item">
+            <div class="demo-block">
+                <div class="ui-placehold-img" style="padding-top: 60%;position: relative;z-index: -1">
+                    <span style="background-image:url(img/u0.jpg);background-size:100% 100%"></span>
+                </div>
+                <div class="ui-avatar-lg" style="margin-left: 40%;margin-bottom: 10px;margin-top:-33px">
+                    <span style="background-image:url(img/u34.jpg)"></span>
+                </div>
+                <ul class="ui-tiled">
+                    <li><div>累积获赞数:500<img src="img/u33.png" height="18px" style="margin-left:10px;"/></div></li>
+                    <li><div>今日获赞数:30<img src="img/u33.png" height="18px" style="margin-left:10px;"/></div></li>
+                </ul>
+                <ul class="ui-grid-halve">
+                    <li>
+                        <div class="ui-grid-halve-img">
+                            <span style="background-image:url(img/u9.jpg)"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ui-grid-halve-img">
+                            <span style="background-image:url(img/u7.png)"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ui-grid-halve-img">
+                            <span style="background-image:url(img/u11.jpg)"></span>
+                        </div>
+                    </li>
+                </ul>
+                <div style="text-align: right;">
+                    <button class="ui-btn ui-btn-glor" style="margin-right:10px">
+                        编辑相册
+                    </button>
+                </div>
+                <ul class="ui-tiled" style="margin-top: 40px">
+                    <li><div>我想坐坐<p class="ui-txt-warning" style="display: inline">(33)</p></div></li>
+                    <li><div>我想试试<p class="ui-txt-warning" style="display: inline">(34)</p></div></li>
+                    <li><div>我想买<p class="ui-txt-warning" style="display: inline">(35)</p></div></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="pic-edit" style="display: none">
+        <div class="demo-item">
+            <div class="demo-block">
+                <ul class="ui-grid-halve">
+                    <li>
+                        <div class="ui-grid-halve-img">
+                            <span style="background-image:url(img/u9.jpg)"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ui-grid-halve-img">
+                            <span style="background-image:url(img/u7.png)"></span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ui-grid-halve-img">
+                            <span style="background-image:url(img/u11.jpg)"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ui-notice-btn" style="margin-top: -20px">
+                <ul class="">
+                    <li><button class="ui-btn-glor ui-btn-lg" id="btn1">添加</button></li>
+                    <li><button class="ui-btn-glor ui-btn-lg" id="btn2">删除</button></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="no-car" style="display: none">
+        <div class="demo-item">
+            <div class="demo-block">
+                <section class="ui-notice">
+                    <i></i>
+                    <h1 class="ui-txt-muted">您还没有车辆哦</h1>
+                    <div class="ui-notice-btn">
+                        <ul class="">
+                            <li><button class="ui-btn-glor ui-btn-lg">添加新车</button></li>
+                            <li><button class="ui-btn-glor ui-btn-lg">找顾问买车</button></li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+    <section class="ui-placehold-wrap" />
+</section>
+<script type="text/javascript">
+    $("#btn1").click(function(){
+        $.tips({
+            content:'调用微信上传接口',
+            stayTime:3000,
+            type:"info"
+        });
+    });
+    $("#btn2").click(function(){
+        $.tips({
+            content:'请双击选中需要删除的图片',
+            stayTime:3000,
+            type:"warn"
+        });
+    });
+    $("#my-center button").on('singleTap', function(){
+        $("#pic-edit").show().siblings().hide();
+    });
+    $("#pic-edit ul>li>div").on('singleTap', function(){
+        $.tips({
+            content:'调用微信预览接口',
+            stayTime:3000,
+            type:"info"
+        });
+    });
+    $("#pic-edit ul>li>div").on('doubleTap', function(){
+        if($(this).attr("class").indexOf('ui-tag-selected') < 0)
+            $(this).addClass('ui-tag-selected');
+        else
+            $(this).removeClass('ui-tag-selected');
+    });
+
+    $(location.hash).show().siblings().hide();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <title>小轮顾问</title>
+    <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>-->
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/glor.css">
+    <script src="lib/zepto.min.js"></script>
+    <script src="js/frozen.js"></script>
+</head>
+
+<body ontouchstart>
+<div class="ui-dialog" id="add-dialog">
+    <div class="ui-dialog-cnt">
+        <header class="ui-dialog-hd ui-border-b">
+            <h3>系统提示</h3>
+            <i class="ui-dialog-close" data-role="button"></i>
+        </header>
+        <div class="ui-dialog-bd" style="text-align: center">
+            <div>添加好友 - 暂未实现</div>
+        </div>
+    </div>
+</div>
+<section class="ui-container">
+    <section id="order-detail" style="display: none">
+        <div class="ui-border-b">
+            <ul class="ui-list ui-list-text ui-border-tb">
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">派单编号</h4>
+
+                    <div id="consultId" class="ui-txt-info">--</div>
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">派单时间</h4>
+
+                    <div id="consultTime" class="ui-txt-info">--</div>
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">选择顾问城市</h4>
+
+                    <div id="consultCity" class="ui-txt-info">--</div>
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">想找几个顾问</h4>
+
+                    <div id="consultCount" class="ui-txt-info">--</div>
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">意向品牌</h4>
+
+                    <div id="consultBrands" class="ui-txt-info">--</div>
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">特殊要求</h4>
+
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 id="consultDescription" class="ui-txt-info">--</h4>
+
+                    <div class="ui-whitespace"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="ui-btn-wrap">
+            <button class="ui-btn-lg ui-btn-glor" id="order-back">
+                返回
+            </button>
+        </div>
+        <div class="ui-placehold-wrap"></div>
+        <div class="ui-placehold-wrap"></div>
+        <div class="ui-placehold-wrap"></div>
+    </section>
+    <section id="sell-detail" style="display: none">
+        <div class="ui-border-b">
+            <ul class="ui-list" style="margin-top: 20px;margin-left: 5%">
+                <li>
+                    <div class="ui-avatar">
+                        <span style="background-image:url(img/u34.jpg)"></span>
+                    </div>
+                    <div class="ui-whitespace"></div>
+                    <div class="ui-list-info ui-border-t">
+                        <p class="ui-nowrap">姓名: <span id="sellerName">--</span></p>
+
+                        <p class="ui-nowrap" style="margin-top: 10px;">所在城市: <span id="sellerCity">--</span></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="ui-border-b">
+            <ul class="ui-list ui-list-text ui-border-tb">
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">移动电话</h4>
+
+                    <div id="sellerPhoneNumber" class="ui-txt-info">--</div>
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">工作单位</h4>
+
+                    <div id="sellerEmployer" class="ui-txt-info">--</div>
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">工作电话</h4>
+
+                    <div id="sellerWorkPhone" class="ui-txt-info">--</div>
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">服务品牌</h4>
+
+                    <div id="sellerServedBrand" class="ui-txt-info">--</div>
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 class="ui-nowrap">自我介绍</h4>
+
+                    <div class="ui-whitespace"></div>
+                </li>
+                <li class="ui-border-t">
+                    <div class="ui-whitespace"></div>
+                    <h4 id="sellerDescription" class="ui-txt-info">--</h4>
+
+                    <div class="ui-whitespace"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="ui-btn-wrap">
+            <button class="ui-btn-lg ui-btn-glor" id="add-friend">
+                加为好友
+            </button>
+        </div>
+        <div class="ui-placehold-wrap"></div>
+        <div class="ui-placehold-wrap"></div>
+        <div class="ui-placehold-wrap"></div>
+    </section>
+    <section id="list-section">
+        <div class="demo-item">
+            <div class="demo-block">
+                <div class="ui-tab">
+                    <ul class="ui-tab-nav ui-border-b">
+                        <li class="current">我的顾问</li>
+                        <li>我的派单</li>
+                    </ul>
+                    <ul class="ui-tab-content" style="width:300%">
+                        <li id="sell-list">
+                            <ul class="ui-list ui-border-tb" style="margin-top: 20px">
+                                <li class="ui-border-b">
+                                    <div class="ui-avatar">
+                                        <span style="background-image:url(http://placeholder.qiniudn.com/140x140)"></span>
+                                    </div>
+                                    <div class="ui-list-info ui-border-t">
+                                        <p class="ui-nowrap" style="display: inline"><span class="ui-whitespace-right">姓名: --</span><span
+                                                class="ui-whitespace-left">联系电话: --</span></p>
+
+                                        <p class="ui-nowrap">咨询品牌: --</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="order-list">
+                            <table class="ui-table ui-border">
+                                <thead>
+                                <tr>
+                                    <th>派单号</th>
+                                    <th>派单时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td><a href="#">详情</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <script class="demo-script">
+                (function () {
+                    var updateOrderDetail = function (consultId) {
+                        $.get("customer-consult-detail.action", {"consultId": consultId}, function (data) {
+                            if (!data.errorCode) {
+                                var detail = data.detail;
+                                $("#consultId").html(detail.entityId);
+                                $("#consultTime").html(detail.createTimeStr);
+                                $("#consultCity").html(detail.city.regionName);
+                                $("#consultCount").html(detail.wantedConsultants + "个");
+                                var brandStr = "" + detail.subBrandList[0].name;
+                                for (var i = 1; i < detail.subBrandList.length; ++i) {
+                                    brandStr = brandStr + "、" + detail.subBrandList[i].name;
+                                }
+                                $("#consultBrands").html(brandStr);
+                                $("#consultDescription").html(detail.description);
+                            } else {
+                                alert(data.errorMessage);
+                            }
+                        });
+                    };
+
+                    var updateSellerDetail = function (sellerId) {
+                        $.get("customer-seller-detail.action", {"seller.entityId": sellerId}, function (data) {
+                            if (!data.errorCode) {
+                                var seller = data.seller;
+                                $("#sellerName").html(seller.realName);
+                                $("#sellerCity").html(seller.region.regionName);
+                                $("#sellerPhoneNumber").html(seller.phoneNumber);
+                                $("#sellerEmployer").html(seller.employer);
+                                $("#sellerWorkPhone").html(seller.workPhone);
+                                $("#sellerServedBrand").html(seller.servedBrand.name);
+                                $("#sellerDescription").html(seller.description);
+                                $("#sell-detail").find(".ui-avatar span").css("background-image", "url(" + seller.headImgUrl.substr(0, seller.headImgUrl.length - 1) + "132)")
+                            } else {
+                                alert(data.errorMessage);
+                            }
+                        });
+                    };
+
+                    var updateOrderList = function () {
+                        $("#order-list table tbody").html("");
+                        $.get("customer-consult-list.action", {}, function (data) {
+                            if (!data.errorCode) {
+                                for (var i = 0; i < data.orderList.length; ++i) {
+                                    var order = data.orderList[i];
+                                    var tr = $("<tr>");
+                                    $("#order-list table tbody").append(tr);
+                                    tr.append("<td>" + order.entityId + "</td>");
+                                    tr.append("<td>" + order.createTimeStr + "</td>");
+                                    tr.append("<td><a href='#'>详情</a></td>");
+                                    tr.append($("<input>").attr("type", "hidden").val(order.entityId));
+                                }
+                                bindOrderList();
+                            } else {
+//                                alert(data.errorMessage);
+                            }
+                        });
+                    };
+
+                    var updateSellerList = function () {
+                        $("#sell-list").html("");
+                        $.get("customer-seller-list.action", {}, function (data) {
+                            if (!data.errorCode) {
+                                for (var i = 0; i < data.sellerList.length; ++i) {
+                                    var seller = data.sellerList[i];
+                                    var ul = $("<ul class='ui-list ui-border-tb'' style='margin-top: 20px'>");
+                                    $("#sell-list").append(ul);
+                                    var li = $("<li class='ui-border-b'>");
+                                    ul.append(li);
+                                    var div1 = $("<div class='ui-avatar'>");
+                                    li.append(div1);
+                                    div1.append("<span style='background-image:url(" + seller.headImgUrl.substr(0, seller.headImgUrl.length - 1) + "132)'></span>")
+                                    var div2 = $("<div class='ui-list-info ui-border-t'>");
+                                    li.append(div2);
+                                    div2.val(seller.entityId);
+                                    var p1 = $("<p class='ui-nowrap' style='display: inline'>");
+                                    div2.append(p1);
+                                    var spanName = $("<span class='ui-whitespace-right'>");
+                                    p1.append(spanName);
+                                    spanName.html("姓名：" + seller.realName);
+                                    var spanPhone = $("<span class='ui-whitespace-right'>");
+                                    p1.append(spanPhone);
+                                    spanPhone.html("联系电话：" + seller.phoneNumber);
+                                    var p2 = $("<p class='ui-nowrap'>");
+                                    div2.append(p2);
+                                    p2.html("咨询品牌：" + seller.servedBrand.name);
+                                }
+                                if (data.sellerList.length == 0) {
+                                    $("#sell-list").append($("<p>您还没有找过顾问或没有被顾问抢过单</p>"));
+                                }
+                                bindSellerList();
+                            } else {
+                                alert(data.errorMessage);
+                            }
+                        });
+                    };
+
+                    var bindSellerList = function () {
+                        $("#sell-list ul .ui-list-info").on('click', function () {
+                            $("#sell-detail").show().siblings().hide();
+                            updateSellerDetail($(this).val());
+                        });
+                    };
+
+                    var bindOrderList = function () {
+                        $("#order-list a").on('click', function () {
+                            $("#order-detail").show().siblings().hide();
+                            updateOrderDetail($(this).parent().parent().find("input").val());
+                        });
+                    };
+
+                    var tab = new fz.Scroll('.ui-tab', {
+                        role: 'tab'
+                    });
+                    $("#add-friend").on('click', function () {
+                        $("#add-dialog").dialog("show");
+                    });
+                    $("#order-back").on('click', function () {
+                        $("#list-section").show().siblings().hide();
+                        updateSellerList();
+                        updateOrderList();
+                    });
+
+                    if (window.location.search.indexOf("type=Consult") > -1) {
+                        var idKey = "id";
+                        var consultIdIndex = window.location.search.indexOf(idKey);
+                        if (consultIdIndex > 0) {
+                            var consultId = window.location.search.substr(consultIdIndex + idKey.length + 1);
+                            $("#order-detail").show().siblings().hide();
+                            updateOrderDetail(consultId);
+                        }
+                    } else if (window.location.search.indexOf("type=Seller") > -1) {
+                        var idKey = "id";
+                        var sellerIdIndex = window.location.search.indexOf(idKey);
+                        if (sellerIdIndex > 0) {
+                            var sellerId = window.location.search.substr(sellerIdIndex + idKey.length + 1);
+                            $("#sell-detail").show().siblings().hide();
+                            updateSellerDetail(sellerId);
+                        }
+                    } else {
+                        updateSellerList();
+                        updateOrderList();
+                    }
+                })();
+            </script>
+        </div>
+    </section>
+</section>
+</body>
+</html>

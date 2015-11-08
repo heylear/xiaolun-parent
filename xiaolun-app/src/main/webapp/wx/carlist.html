@@ -1,0 +1,77 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no">
+    <title>周边好车排行</title>
+    <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>-->
+    <link rel="stylesheet" href="css/frozen.css">
+    <link rel="stylesheet" href="css/wordpress.css">
+    <link rel="stylesheet" href="css/glor.css">
+    <script src="lib/zepto.min.js"></script>
+    <script src="js/frozen.js"></script>
+</head>
+<body ontouchstart style="background-color: dimgray">
+<div class="ui-loading-block hide" id="ajax_loading">
+    <div class="ui-loading-cnt">
+        <i class="ui-loading-bright"></i>
+
+        <p>正在加载中...</p>
+    </div>
+</div>
+<section id="center_container">
+
+
+</section>
+<script id="car_list" type="text/html">
+    <div class="align-center ui-txt-default mt10" style="font-size: larger">周边好车排行榜</div>
+    <div class="widget-box car-list">
+        <div class="ui-avatar-lg">
+            <span style="background-image:url({{headimgurl}})"></span>
+        </div>
+        <div class="widget-content car-list-content">
+            <ul class="ui-list ui-border-tb">
+                {{each nearbylist as nearby}}
+                <li class="ui-border-t">
+                    <div class="ui-avatar">
+                        <span style="background-image:url({{nearby.headimgurl}})"></span>
+                    </div>
+                    <div class="ui-list-info" data-target="{{nearby.entity_id}}" data-self="{{selfid}}">
+                        <h4><span class="fa-pull-left">{{nearby.nickname}}</span> </h4>
+                        <p><span class="fa-pull-right">累积获赞数:{{nearby.total_cnt}}<img src="img/u33.png" style="margin-left:10px;height: 18px"/></span></p>
+                    </div>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="align-center ui-txt-default mt10">最后更新时间: {{lastupdate}}</div>
+        <!--<div class="ui-placehold-img mt10" style="margin-left: 5%;margin-right: 5%;height: 120px">
+            <span style="background-image:url(img/4.pic.jpg);background-size:100% 100%"></span>
+        </div>-->
+    </div>
+</script>
+<script src="lib/zepto.min.js"></script>
+<script src="js/frozen.js"></script>
+<script src="js/template.js"></script>
+<script src="js/zepto-ext.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $.getJSONExt('nearbylist.action', function (Data) {
+            $("#center_container").applyTemplate("car_list", Data);
+            $(".ui-list-info").each(function(){
+                $(this).on('singleTap',function(){
+                    var destUserId = $(this).data('target');
+                    var self = $(this).data('self');
+                    if(destUserId == self) {
+                        location.href = 'newcenter.html'
+                    }else{
+                        location.href = 'newcenter2.html?destUserId=' + destUserId;
+                    }
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>

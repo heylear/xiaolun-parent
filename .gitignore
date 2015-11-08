@@ -1,0 +1,13 @@
+*.iml
+.idea/
+target/
+**/META-INF/Context.xml
+
+*.log
+
+*.log.*
+
+download/
+
+# power designer
+*.pdb

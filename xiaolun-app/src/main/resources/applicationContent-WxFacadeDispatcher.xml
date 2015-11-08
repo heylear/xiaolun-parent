@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="cn.glor.xiaolun.app.controller.WxFacadeDispatcher">
+        <property name="routeList">
+            <list>
+                <bean class="cn.glor.xiaolun.app.controller.common.dispatcher.Route">
+                    <property name="func" value="consult"/>
+                    <property name="redirectUrl" value="wx/find.html?t=1511081344"/>
+                </bean>
+                <bean class="cn.glor.xiaolun.app.controller.common.dispatcher.Route">
+                    <property name="func" value="customer"/>
+                    <property name="redirectUrl" value="wx/cus_center.html?t=1511081344"/>
+                </bean>
+                <bean class="cn.glor.xiaolun.app.controller.common.dispatcher.Route">
+                    <property name="func" value="register"/>
+                    <property name="redirectUrl" value="wx/sign.html?t=1511081344"/>
+                </bean>
+                <bean class="cn.glor.xiaolun.app.controller.common.dispatcher.Route">
+                    <property name="func" value="seller"/>
+                    <property name="redirectUrl" value="wx/sell_center.html?t=1511081344"/>
+                </bean>
+                <bean class="cn.glor.xiaolun.app.controller.common.dispatcher.Route">
+                    <property name="func" value="carlist"/>
+                    <property name="redirectUrl" value="wx/carlist.html?t=1511081344"/>
+                </bean>
+                <bean class="cn.glor.xiaolun.app.controller.common.dispatcher.Route">
+                    <property name="func" value="mycenter"/>
+                    <property name="redirectUrl" value="wx/newcenter.html?t=1511081344"/>
+                </bean>
+                <bean class="cn.glor.xiaolun.app.controller.common.dispatcher.Route">
+                    <property name="func" value="othercenter"/>
+                    <property name="redirectUrl" value="wx/newcenter2.html?t=1511081344"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>
